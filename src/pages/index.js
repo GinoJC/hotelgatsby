@@ -1,29 +1,34 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import React from "react";
+import { css } from '@emotion/react';
+import Layout from "../components/Layout";
+import ImagenHotel from "../components/ImagenHotel";
+import ContenidoInicio from "../components/ContenidoInicio";
+import useHabitaciones from "../hooks/useHabitaciones";
+import HabitacionPreview from "../components/HabitacionPreview";
 
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+const IndexPage = () => {
+  const habitaciones = useHabitaciones();
+  console.log(habitaciones);
+  return (
+    <Layout>
+      <ImagenHotel/>
+      <ContenidoInicio/>
+      <h2
+        css={css`
+          text-align: center;
+          margin-top: 5rem;
+          font-size: 3rem;
+        `}
+      >
+        Nuestras Habitaciones
+      </h2>
+      <ul>
+        {habitaciones.map(habitacion => 
+          <HabitacionPreview key={habitacion.id} habitacion={habitacion}/>
+        )}
+      </ul>
+    </Layout>
+  )
+}
 
-const IndexPage = () => (
-  <Layout>
-    <Seo title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <StaticImage
-      src="../images/gatsby-astronaut.png"
-      width={300}
-      quality={95}
-      formats={["AUTO", "WEBP", "AVIF"]}
-      alt="A Gatsby astronaut"
-      style={{ marginBottom: `1.45rem` }}
-    />
-    <p>
-      <Link to="/page-2/">Go to page 2</Link> <br />
-      <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-    </p>
-  </Layout>
-)
-
-export default IndexPage
+export default IndexPage;
